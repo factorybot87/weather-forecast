@@ -6,6 +6,7 @@ import (
 	"forecast/weather"
 	"io"
 	"net/http"
+	"reflect"
 	"testing"
 )
 
@@ -51,6 +52,51 @@ func TestGetBody(t *testing.T) {
 	assertEqual(want, got, t)
 }
 
+func TestParseResponseBody(t *testing.T) {
+
+	t.Run("empty body returns empty result", func(t *testing.T) {
+		jsonData := "{}"
+
+		want := weather.Forecast{}
+		got, err := weather.ParseResponseBody(jsonData)
+
+		assertNoError(err)
+
+		if !reflect.DeepEqual(want, got) {
+			t.Fatal("did not match")
+		}
+	})
+
+	t.Run("good response populates result", func(t *testing.T) {
+		jsonData := `{
+			"currentConditions": {
+				"conditions":"Partially cloudy"
+			},
+			"days": [
+				{"description":"Cloudy skies throughout the day with late afternoon rain."}
+			]
+		}`
+
+		want := weather.Forecast{
+			weather.CurrentCondition{
+				Conditions: "Partially cloudy",
+			},
+			[]weather.DailyWeather{
+				{
+					Description: "Cloudy skies throughout the day with late afternoon rain.",
+				},
+			},
+		}
+		got, err := weather.ParseResponseBody(jsonData)
+
+		assertNoError(err)
+
+		if !reflect.DeepEqual(want, got) {
+			t.Fatal("did not match")
+		}
+	})
+}
+
 func assertEqual(want, got string, t *testing.T) {
 	if got != want {
 		t.Fatal(outputMessage(want, got))
@@ -59,4 +105,10 @@ func assertEqual(want, got string, t *testing.T) {
 
 func outputMessage(want, got string) string {
 	return fmt.Sprint("\nexpect:\n", want, "\n\n got:\n", got)
+}
+
+func assertNoError(err error) {
+	if err != nil {
+		fmt.Println(err)
+	}
 }
