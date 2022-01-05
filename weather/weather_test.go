@@ -95,6 +95,17 @@ func TestParseResponseBody(t *testing.T) {
 			t.Fatal("did not match")
 		}
 	})
+
+	t.Run("bad response returns an error", func(t *testing.T) {
+		invalidData := "invalid data"
+
+		_, err := weather.ParseResponseBody(invalidData)
+
+		if err == nil {
+			t.Fatal("expect error but success")
+		}
+
+	})
 }
 
 func assertEqual(want, got string, t *testing.T) {
