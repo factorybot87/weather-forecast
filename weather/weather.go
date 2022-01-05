@@ -9,7 +9,9 @@ import (
 // GenerateURL will Construct the Visual Crossing API url from components
 func GenerateURL(location, key string) string {
 	baseURL := "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline"
-	url := fmt.Sprintf("%s/%s?key=%s", baseURL, location, key)
+	params := "unitGroup=metric&include=days%2Ccurrent"
+	contentType := "contentType=json"
+	url := fmt.Sprintf("%s/%s?%s&key=%s&%s", baseURL, location, params, key, contentType)
 	return url
 }
 
