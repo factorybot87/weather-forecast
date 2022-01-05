@@ -1,8 +1,11 @@
 package weather_test
 
 import (
+	"bytes"
 	"fmt"
 	"forecast/weather"
+	"io"
+	"net/http"
 	"testing"
 )
 
@@ -13,6 +16,36 @@ func TestGenerateURL(t *testing.T) {
 
 	want := "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Taipei?key=dummyKey"
 	got := weather.GenerateURL(location, key)
+
+	assertEqual(want, got, t)
+}
+
+func TestBuildRequest(t *testing.T) {
+
+	url := "example.com"
+
+	wantURL := url
+	wantMethod := http.MethodGet
+
+	got := weather.BuildRequest(url)
+
+	if got != nil {
+		assertEqual(wantMethod, got.Method, t)
+		assertEqual(wantURL, got.URL.String(), t)
+	} else {
+		t.Fatal("Expect a request, not nil.")
+	}
+}
+
+func TestGetBody(t *testing.T) {
+	dummyResponse := http.Response{
+		StatusCode: 200,
+		Body:       io.NopCloser(bytes.NewBufferString("OK")),
+		Header:     make(http.Header),
+	}
+
+	want := "OK"
+	got := weather.GetBody(&dummyResponse)
 
 	assertEqual(want, got, t)
 }
