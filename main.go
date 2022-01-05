@@ -1,10 +1,11 @@
 package main
 
-import (
-	"fmt"
-	"forecast/weather"
+const (
+	key      = ""
+	location = "taipei"
+	layout   = "January 2, 2006"
 )
 
 func main() {
-	fmt.Println(weather.GenerateURL())
+
 }
