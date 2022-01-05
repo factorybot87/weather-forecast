@@ -11,10 +11,11 @@ import (
 
 func TestGenerateURL(t *testing.T) {
 
-	location := "Taipei"
+	location := "taipei"
 	key := "dummyKey"
 
-	want := "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Taipei?key=dummyKey"
+	want := "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/taipei?unitGroup=metric&include=days%2Ccurrent&key=dummyKey&contentType=json"
+
 	got := weather.GenerateURL(location, key)
 
 	assertEqual(want, got, t)
