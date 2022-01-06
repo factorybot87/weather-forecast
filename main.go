@@ -36,10 +36,10 @@ func formatOutput(forecast weather.Forecast) {
 	current := forecast.CurrentConditions
 	currentTime := time.Unix(current.DatetimeEpoch, 0).Format(layout)
 	currentWeatherFormat := `
-		Current Time: %s
-		Summary:      %s
-		Temperature:  %.2f
-		Wind Speed:   %.2f
-	`
+Current Time: %s
+Summary:      %s
+Temperature:  %.2f
+Wind Speed:   %.2f
+`
 	fmt.Printf(currentWeatherFormat, currentTime, current.Conditions, current.Temp, current.WindSpeed)
 }
