@@ -19,3 +19,5 @@ Replace the `key` constant in the `main.go` with your API key.
 `weather/` contains a http client and a json parser to interacts with the Timeline API.
 
 ## Screenshot
+
+<img width="800" alt="forecast" src="https://user-images.githubusercontent.com/79628930/148376740-16d285c6-a43f-42ad-90fa-6c2f3ee548bb.png">
