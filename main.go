@@ -43,9 +43,9 @@ Wind Speed:   %.2f
 `
 	fmt.Printf(currentWeatherFormat, currentTime, current.Conditions, current.Temp, current.WindSpeed)
 
-	next5DaysForecast := forecast.Days[1:6]
+	next6DaysForecast := forecast.Days[1:7]
 
-	for _, day := range next5DaysForecast {
+	for _, day := range next6DaysForecast {
 		forecastTime := formatDatetime(day.DatetimeEpoch)
 		forecastFormat := `
 Date:         %s
