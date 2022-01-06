@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"forecast/weather"
 	"net/http"
+	"time"
 )
 
 const (
@@ -31,5 +33,13 @@ func getForecast(location, key string) (weather.Forecast, error) {
 }
 
 func formatOutput(forecast weather.Forecast) {
-
+	current := forecast.CurrentConditions
+	currentTime := time.Unix(current.DatetimeEpoch, 0).Format(layout)
+	currentWeatherFormat := `
+		Current Time: %s
+		Summary:      %s
+		Temperature:  %.2f
+		Wind Speed:   %.2f
+	`
+	fmt.Printf(currentWeatherFormat, currentTime, current.Conditions, current.Temp, current.WindSpeed)
 }
